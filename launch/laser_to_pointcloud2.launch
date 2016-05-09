@@ -1,0 +1,24 @@
+<launch>
+	<!-- <node pkg="tf" type="static_transform_publisher" name="laser_tilt_static_mount_link" args="0.098 0.000 0.257 -0.500 +0.500 -0.500 +0.500 torso_lift_link laser_tilt_static_mount_link 20" /> -->
+	<node pkg="tf" type="static_transform_publisher" name="laser_tilt_static_mount_link" args="0.098 0.000 0.257 -0.5049 +0.497 -0.495 +0.503 torso_lift_link laser_tilt_static_mount_link 20" />
+
+
+	<node name="laser_to_pointcloud2_base" pkg="depth_tools" type="laser_to_pointcloud2_node" respawn="false" output="screen">
+		<remap from="/scan" to="/base_scan" />
+		<remap from="/scan_cloud" to="/base_scan_cloud" />
+		<param name="max_scans" type="int" value="1" />
+		<param name="fixed_frame" type="string" value="odom_combined" />
+		<param name="rolling_publish" type="bool" value="true" />
+		<param name="range_cutoff" type="double" value="50.0" />
+	</node>
+
+	<node name="laser_to_pointcloud2_tilt" pkg="depth_tools" type="laser_to_pointcloud2_node" respawn="false" output="screen">
+		<remap from="/scan" to="/tilt_scan" />
+		<remap from="/scan_cloud" to="/tilt_scan_cloud" />
+		<param name="max_scans" type="int" value="1000" />
+		<param name="fixed_frame" type="string" value="odom_combined" />
+		<param name="rolling_publish" type="bool" value="true" />
+		<param name="range_cutoff" type="double" value="20.0" />
+	</node>
+
+</launch>
